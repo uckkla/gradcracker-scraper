@@ -1,6 +1,7 @@
 import requests
 import pandas as pd
 import time
+import random
 from bs4 import BeautifulSoup
 
 
@@ -15,7 +16,9 @@ class GradcrackerScraper:
         df = pd.DataFrame(columns=["Title", "Categories", "Salary", "Location", "Degree required", "Job type",
                                    "Duration", "Starting", "Deadline"])
         while True:
-            time.sleep(1)
+            # Random sleep to avoid temporarily being IP banned
+            time.sleep(random.randint(1,3))
+            print(df)
             response = requests.get(self.url+str(pageNumber), headers=self.headers)
             if response.url != self.url+str(pageNumber):
                 break
@@ -26,8 +29,11 @@ class GradcrackerScraper:
                 soup = BeautifulSoup(response.content, "html.parser")
 
                 for job in soup.find_all("div", class_="tw-w-3/5 tw-pr-4 tw-space-y-2"):
-                    title = job.find("a", class_="tw-block tw-text-base tw-font-semibold").text.strip()
-                    categories = job.find("div", class_="tw-text-xs tw-font-bold tw-text-gray-800").text.strip()
+                    # Need to store as elements first, rare case where it does not exist
+                    titleElement = job.find("a", class_="tw-block tw-text-base tw-font-semibold")
+                    title = titleElement.text.strip() if titleElement else "N/A"
+                    categoriesElement = job.find("div", class_="tw-text-xs tw-font-bold tw-text-gray-800")
+                    categories = categoriesElement.text.strip() if categoriesElement else "N/A"
 
                     attributes = {}
                     attributeList = job.find_all("li", class_="tw-flex")
