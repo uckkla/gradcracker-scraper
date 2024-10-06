@@ -6,8 +6,28 @@ from bs4 import BeautifulSoup
 
 
 class GradcrackerScraper:
-    def __init__(self):
-        self.url = "https://www.gradcracker.com/search/all-disciplines/engineering-jobs?page="
+    def __init__(self, jobLevel, expertise):
+        # Filter based on which job scheme and main category user has chosen
+        baseURL = "https://www.gradcracker.com/search"
+        # Job level
+        jobLevelURL = {
+            "Graduate": "/engineering-graduate-jobs",
+            "Placement": "/engineering-work-placements-internships",
+            "Graduate+Placement": "/engineering-jobs",
+            #"Apprenticeship": "degree-apprenticeships" - Requires changing a lot of code
+        }
+        expertiseURL = {
+            "Aerospace": "/aerospace",
+            "Chemical/Process": "/chemical-process",
+            "Civil/Building": "/civil-building",
+            "Computing/Technology": "/computing-technology",
+            "Electronic/Electrical": "/electronic-electrical",
+            "Maths/Business": "/maths-business",
+            "Mechanical/Manufacturing": "/mechanical-manufacturing",
+            "Science": "/science",
+            "All": "/all-disciplines"
+        }
+        self.url = baseURL + expertiseURL.get(expertise) + jobLevelURL.get(jobLevel) + "?page="
         self.headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko)"
                                       " Chrome/129.0.0.0 Safari/537.36", }
 
@@ -50,7 +70,7 @@ class GradcrackerScraper:
                     })
 
                 currentdf = pd.DataFrame(currentJobs)
-                df = pd.concat([df, currentdf])
+                df = pd.concat([df, currentdf]).reset_index(drop=True)
 
                 pageNumber += 1
             else:

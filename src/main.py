@@ -2,9 +2,10 @@ from scraper import GradcrackerScraper
 from data_converter import DataConverter
 
 def main():
-    scraper = GradcrackerScraper()
+    categories = ["Statistics"]
+    scraper = GradcrackerScraper("Graduate", "Computing/Technology")
     jobsdf = scraper.scrapeJobData()
-    dataConverter = DataConverter(jobsdf)
+    dataConverter = DataConverter(jobsdf, categories)
     dataConverter.exportToCSV()
 
 
