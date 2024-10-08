@@ -38,7 +38,6 @@ class GradcrackerScraper:
         while True:
             # Random sleep to avoid temporarily being IP banned
             time.sleep(random.randint(1,3))
-            print(df)
             response = requests.get(self.url+str(pageNumber), headers=self.headers)
             if response.url != self.url+str(pageNumber):
                 break
@@ -63,11 +62,15 @@ class GradcrackerScraper:
                         attributes[attributeName.strip()] = attributeData.strip()
 
                     # **attributes unpacks into key-value pairs
+                    # It will add other categories if they don't exist on the df column
                     currentJobs.append({
                         "Title": title,
                         "Categories": categories,
                         **attributes
                     })
+
+                if not currentJobs:
+                    break
 
                 currentdf = pd.DataFrame(currentJobs)
                 df = pd.concat([df, currentdf]).reset_index(drop=True)
