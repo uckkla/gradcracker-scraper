@@ -6,14 +6,14 @@ from bs4 import BeautifulSoup
 
 
 class GradcrackerScraper:
-    def __init__(self, jobLevel, expertise):
+    def __init__(self, jobLevel="All", expertise="All"):
         # Filter based on which job scheme and main category user has chosen
         baseURL = "https://www.gradcracker.com/search"
         # Job level
         jobLevelURL = {
             "Graduate": "/engineering-graduate-jobs",
             "Placement": "/engineering-work-placements-internships",
-            "Graduate+Placement": "/engineering-jobs",
+            "All": "/engineering-jobs"
             #"Apprenticeship": "degree-apprenticeships" - Requires changing a lot of code
         }
         expertiseURL = {
@@ -27,6 +27,10 @@ class GradcrackerScraper:
             "Science": "/science",
             "All": "/all-disciplines"
         }
+
+        self.jobsTotal = 0  # Needed for updating progress bar in GUI
+        self.jobsIterated = 0
+
         self.url = baseURL + expertiseURL.get(expertise) + jobLevelURL.get(jobLevel) + "?page="
         self.headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko)"
                                       " Chrome/129.0.0.0 Safari/537.36", }
@@ -42,12 +46,16 @@ class GradcrackerScraper:
             if response.url != self.url+str(pageNumber):
                 break
 
-            # Error 200 - response successful
+            # Status Code 200 - response successful
             if response.status_code == 200:
                 currentJobs = []
                 soup = BeautifulSoup(response.content, "html.parser")
 
+                totalJobsElement = soup.find("div", class_="tw-text-2xl tw-font-bold tw-text-orange-500")
+                self.jobsTotal = int(totalJobsElement.text.strip())
+
                 for job in soup.find_all("div", class_="tw-w-3/5 tw-pr-4 tw-space-y-2"):
+                    self.jobsIterated += 1
                     # Need to store as elements first, rare case where it does not exist
                     titleElement = job.find("a", class_="tw-block tw-text-base tw-font-semibold")
                     title = titleElement.text.strip() if titleElement else "N/A"
@@ -79,3 +87,9 @@ class GradcrackerScraper:
             else:
                 return f"Failed to retrieve data, status code: {response.status_code}"
         return df
+
+    def getJobsTotal(self):
+        return self.jobsTotal
+
+    def getJobsIterated(self):
+        return self.jobsIterated

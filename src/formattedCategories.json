@@ -1,0 +1,247 @@
+{
+    "Accountancy": [
+        "Accountancy"
+    ],
+    "Acoustics": [
+        "Acoustics"
+    ],
+    "Aerodynamics": [
+        "Aerodynamics"
+    ],
+    "Aeronautics": [
+        "Aeronautics"
+    ],
+    "Aerospace": [
+        "Aerospace"
+    ],
+    "Analytics": [
+        "Analytics"
+    ],
+    "Architecture": [
+        "Architecture"
+    ],
+    "Artificial Intelligence": [
+        "AI",
+        "Artificial Intelligence"
+    ],
+    "Automotive Engineering": [
+        "Automotive",
+        "Automotive Engineering"
+    ],
+    "Avionics": [
+        "Avionic",
+        "Avionics"
+    ],
+    "Bioengineering": [
+        "Bioengineering"
+    ],
+    "Biology": [
+        "Biology"
+    ],
+    "Biomedical": [
+        "Biomedical"
+    ],
+    "Biotechnology": [
+        "Biotechnology"
+    ],
+    "Building Services": [
+        "Building Services"
+    ],
+    "Building Surveying": [
+        "Building",
+        "Surveying",
+        "Building Surveying"
+    ],
+    "Business": [
+        "Business"
+    ],
+    "Chemical Engineering": [
+        "Chemical"
+    ],
+    "Chemistry": [
+        "Chemistry"
+    ],
+    "Civil Engineering": [
+        "Civil"
+    ],
+    "Computer Science": [
+        "Computing",
+        "Computer Science"
+    ],
+    "Construction": [
+        "Construction",
+        "Construction Management"
+    ],
+    "Construction Management": [
+        "Construction Management"
+    ],
+    "Control & Instrumentation": [
+        "C&I",
+        "Control & Instrumentation"
+    ],
+    "Cyber Security": [
+        "Cyber",
+        "Cyber Security"
+    ],
+    "Data Science": [
+        "Data",
+        "Data Science"
+    ],
+    "Ecology": [
+        "Ecology"
+    ],
+    "Economics": [
+        "Economics"
+    ],
+    "Electrical Engineering": [
+        "Electrical",
+        "Electrical Engineering"
+    ],
+    "Electronic Engineering": [
+        "Electronic",
+        "Electronics",
+        "Electronic Engineering"
+    ],
+    "Energy/Renewables": [
+        "Energy",
+        "Renewables"
+    ],
+    "Environment & Sustainability": [
+        "Environment",
+        "Sustainability"
+    ],
+    "Environmental Science": [
+        "Environmental",
+        "Environmental Science"
+    ],
+    "Finance": [
+        "Finance"
+    ],
+    "FinTech": [
+        "FinTech"
+    ],
+    "Fire Engineering": [
+        "Fire",
+        "Fire Engineering"
+    ],
+    "Geology": [
+        "Geology"
+    ],
+    "Geophysics": [
+        "Geophysics"
+    ],
+    "Geotechnical": [
+        "Geotechnical"
+    ],
+    "Hardware Engineering": [
+        "Hardware",
+        "Hardware Engineering"
+    ],
+    "Information Technology": [
+        "IT",
+        "Information Technology"
+    ],
+    "Infrastructure Engineering": [
+        "Infrastructure",
+        "Infrastructure Engineering"
+    ],
+    "IT Architecture": [
+        "IT",
+        "IT Architecture"
+    ],
+    "Landscape Architecture": [
+        "Landscape Architecture"
+    ],
+    "Manufacturing Engineering": [
+        "Manufacturing",
+        "Manufacturing Engineering"
+    ],
+    "Marine": [
+        "Marine"
+    ],
+    "Materials & Minerals": [
+        "Materials & Minerals"
+    ],
+    "Materials Science Engineering": [
+        "Materials",
+        "Materials Science Engineering"
+    ],
+    "Maths": [
+        "Maths"
+    ],
+    "Mechanical Engineering": [
+        "Mechanical",
+        "Mechanical Engineering"
+    ],
+    "Mechatronics": [
+        "Mechatronics"
+    ],
+    "Metallurgy": [
+        "Metallurgy"
+    ],
+    "Microelectronics": [
+        "Microelectronics"
+    ],
+    "Naval Architecture": [
+        "Naval",
+        "Naval Architecture"
+    ],
+    "Nuclear Engineering": [
+        "Nuclear"
+    ],
+    "Pharmacology": [
+        "Pharmacology"
+    ],
+    "Physics": [
+        "Physics"
+    ],
+    "Process Engineering": [
+        "Process"
+    ],
+    "Product Design": [
+        "Product Design"
+    ],
+    "Project Management": [
+        "Project Management"
+    ],
+    "Quantity Surveying": [
+        "Quantity Surveying"
+    ],
+    "Robotics": [
+        "Robotics"
+    ],
+    "Software Engineering": [
+        "Software",
+        "Software Engineering"
+    ],
+    "Statistics": [
+        "Statistics"
+    ],
+    "Structural Engineering": [
+        "Structural"
+    ],
+    "Supply Chain & Logistics": [
+        "Supply Chain",
+        "Supply Chain & Logistics"
+    ],
+    "Sustainability": [
+        "Sustainability"
+    ],
+    "Systems Engineering": [
+        "Systems",
+        "Systems Engineering"
+    ],
+    "Telecommunications": [
+        "Telecommunications"
+    ],
+    "Transport Planning": [
+        "Transport Planning"
+    ],
+    "Water/Hydrology": [
+        "Water",
+        "Hydrology"
+    ],
+    "Web Development": [
+        "Web Development"
+    ]
+}

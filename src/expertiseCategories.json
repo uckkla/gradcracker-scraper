@@ -1,0 +1,107 @@
+{
+    "All": [
+        "All"
+    ],
+    "Aerospace": [
+        "Aerodynamics",
+        "Aeronautics",
+        "Aerospace",
+        "Avionics"
+    ],
+    "Chemical/Process": [
+        "Chemical Engineering",
+        "Energy/Renewables",
+        "Nuclear Engineering",
+        "Process Engineering"
+    ],
+    "Civil/Building": [
+        "Acoustics",
+        "Architecture",
+        "Building Services",
+        "Building Surveying",
+        "Civil Engineering",
+        "Construction",
+        "Construction Management",
+        "Environment & Sustainability",
+        "Fire Engineering",
+        "Geotechnical",
+        "Infrastructure Engineering",
+        "Landscape Architecture",
+        "Project Management",
+        "Quantity Surveying",
+        "Structural Engineering",
+        "Transport Planning",
+        "Water/Hydrology"
+    ],
+    "Computing/Technology": [
+        "Artificial Intelligence",
+        "Computer Science",
+        "Cyber Security",
+        "Data Science",
+        "FinTech",
+        "Hardware Engineering",
+        "Information Technology",
+        "IT Architecture",
+        "Naval Architecture",
+        "Robotics",
+        "Software Engineering",
+        "Systems Engineering",
+        "Telecommunications",
+        "Web Development"
+    ],
+    "Electronic/Electrical": [
+        "Control & Instrumentation",
+        "Electrical Engineering",
+        "Electronic Engineering",
+        "Energy/Renewables",
+        "Marine",
+        "Mechatronics",
+        "Microelectronics",
+        "Naval Architecture"
+    ],
+    "Maths/Business": [
+        "Accountancy",
+        "Analytics",
+        "Business",
+        "Data Science",
+        "Economics",
+        "Finance",
+        "FinTech",
+        "Maths",
+        "Project Management",
+        "Statistics",
+        "Supply Chain & Logistics"
+    ],
+    "Mechanical/Manufacturing": [
+        "Automotive Engineering",
+        "Manufacturing Engineering",
+        "Marine",
+        "Materials & Minerals",
+        "Materials Science Engineering",
+        "Mechanical Engineering",
+        "Mechatronics",
+        "Metallurgy",
+        "Naval Architecture",
+        "Nuclear Engineering",
+        "Product Design",
+        "Robotics"
+    ],
+    "Science": [
+        "Bioengineering",
+        "Biology",
+        "Biomedical",
+        "Biotechnology",
+        "Chemistry",
+        "Data Science",
+        "Ecology",
+        "Energy/Renewables",
+        "Environmental Science",
+        "Geology",
+        "Geophysics",
+        "Geotechnical",
+        "Pharmacology",
+        "Physics",
+        "Sustainability",
+        "Water/Hydrology"
+    ]
+}
