@@ -141,10 +141,6 @@ class MainWindow(QMainWindow):
             self.dataConverter.exportToCSV()
 
     def refreshData(self):
-        print("Hi1")
         if self.dataConverter is not None:
-            print("Hi2")
             self.jobsList.clear()
-            print("Hi3")
-            print(self.dataConverter.toString())
             self.jobsList.addItems(self.dataConverter.toString())

@@ -1,5 +1,3 @@
-from scraper import GradcrackerScraper
-from data_converter import DataConverter
 import sys
 from PyQt6.QtWidgets import QApplication
 from src.gui import MainWindow

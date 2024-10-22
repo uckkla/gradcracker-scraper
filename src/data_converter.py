@@ -1,5 +1,4 @@
 import json
-import numpy
 
 class DataConverter:
     def __init__(self, df, categories):
