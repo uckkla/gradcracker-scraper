@@ -28,68 +28,92 @@ class GradcrackerScraper:
             "All": "/all-disciplines"
         }
 
-        self.jobsTotal = 0  # Needed for updating progress bar in GUI
-        self.jobsIterated = 0
-
         self.url = baseURL + expertiseURL.get(expertise) + jobLevelURL.get(jobLevel) + "?page="
         self.headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko)"
                                       " Chrome/129.0.0.0 Safari/537.36", }
 
-    def scrapeJobData(self):
+        # Needed for updating progress bar in GUI
+        self.totalJobs = self.fetchTotalJobs()
+        self.iteratedJobs = 0
+
+    # Scrapes a page of job listings, returns in df format
+    def scrapeJobDataBatch(self):
         pageNumber = 1
         df = pd.DataFrame(columns=["Title", "Categories", "Salary", "Location", "Degree required", "Job type",
                                    "Duration", "Starting", "Deadline"])
-        while True:
-            # Random sleep to avoid temporarily being IP banned
-            time.sleep(random.randint(1,3))
-            response = requests.get(self.url+str(pageNumber), headers=self.headers)
-            if response.url != self.url+str(pageNumber):
-                break
 
-            # Status Code 200 - response successful
-            if response.status_code == 200:
-                currentJobs = []
-                soup = BeautifulSoup(response.content, "html.parser")
+        # Random sleep to avoid temporarily being IP banned
+        time.sleep(random.randint(1,3))
+        response = requests.get(self.url+str(pageNumber), headers=self.headers)
 
-                totalJobsElement = soup.find("div", class_="tw-text-2xl tw-font-bold tw-text-orange-500")
-                self.jobsTotal = int(totalJobsElement.text.strip())
+        # Page automatically sets to last page no matter how large the number
+        # So if not equal, last page was found
+        if response.url != self.url+str(pageNumber):
+            return None
 
-                for job in soup.find_all("div", class_="tw-w-3/5 tw-pr-4 tw-space-y-2"):
-                    self.jobsIterated += 1
-                    # Need to store as elements first, rare case where it does not exist
-                    titleElement = job.find("a", class_="tw-block tw-text-base tw-font-semibold")
-                    title = titleElement.text.strip() if titleElement else "N/A"
-                    categoriesElement = job.find("div", class_="tw-text-xs tw-font-bold tw-text-gray-800")
-                    categories = categoriesElement.text.strip() if categoriesElement else "N/A"
+        # Status Code 200 - response successful
+        if response.status_code == 200:
+            currentJobs = []
+            soup = BeautifulSoup(response.content, "html.parser")
 
-                    attributes = {}
-                    attributeList = job.find_all("li", class_="tw-flex")
+            # Need to get label first, as employees label and count also use same class name
+            # Get total jobs to accurately present progress bar
+            totalJobsLabel = soup.find("div", class_="tw-text-sm tw-font-semibold tw-text-gray-900",
+                                       string="Graduate Opportunities")
+            totalJobsCount = totalJobsLabel.find_previous_sibling(
+                "div", class_="tw-text-2xl tw-font-bold tw-text-orange-500")
+            self.totalJobs = int(totalJobsCount.text.strip().replace(",", ""))
 
-                    for attribute in attributeList:
-                        attributeName, attributeData = attribute.text.strip().split(":", 1)
-                        attributes[attributeName.strip()] = attributeData.strip()
+            for job in soup.find_all("div", class_="tw-w-3/5 tw-pr-4 tw-space-y-2"):
+                self.iteratedJobs += 1
 
-                    # **attributes unpacks into key-value pairs
-                    # It will add other categories if they don't exist on the df column
-                    currentJobs.append({
-                        "Title": title,
-                        "Categories": categories,
-                        **attributes
-                    })
+                # Need to store as elements first, rare case where it does not exist
+                titleElement = job.find("a", class_="tw-block tw-text-base tw-font-semibold")
+                title = titleElement.text.strip() if titleElement else "N/A"
 
-                if not currentJobs:
-                    break
+                categoriesElement = job.find("div", class_="tw-text-xs tw-font-bold tw-text-gray-800")
+                categories = categoriesElement.text.strip() if categoriesElement else "N/A"
 
-                currentdf = pd.DataFrame(currentJobs)
-                df = pd.concat([df, currentdf]).reset_index(drop=True)
+                attributes = {}
+                attributeList = job.find_all("li", class_="tw-flex")
 
-                pageNumber += 1
-            else:
-                return f"Failed to retrieve data, status code: {response.status_code}"
+                for attribute in attributeList:
+                    attributeName, attributeData = attribute.text.strip().split(":", 1)
+                    attributes[attributeName.strip()] = attributeData.strip()
+
+                # **attributes unpacks into key-value pairs
+                # It will add other categories if they don't exist on the df column
+                currentJobs.append({
+                    "Title": title,
+                    "Categories": categories,
+                    **attributes
+                })
+
+            # If no jobs exist, rare case when page is empty
+            if not currentJobs:
+                return None
+
+            currentdf = pd.DataFrame(currentJobs)
+            df = pd.concat([df, currentdf]).reset_index(drop=True)
+
+            pageNumber += 1
+        else:
+            return f"Failed to retrieve data, status code: {response.status_code}"
         return df
 
-    def getJobsTotal(self):
-        return self.jobsTotal
+    def fetchTotalJobs(self):
+        response = requests.get(self.url + "1", headers=self.headers)
+        if response.status_code == 200:
+            soup = BeautifulSoup(response.content, "html.parser")
+            totalJobsLabel = soup.find("div", class_="tw-text-sm tw-font-semibold tw-text-gray-900",
+                                       string="Graduate Opportunities")
+            totalJobsCount = totalJobsLabel.find_previous_sibling(
+                "div", class_="tw-text-2xl tw-font-bold tw-text-orange-500")
+            return int(totalJobsCount.text.strip().replace(",", ""))
 
-    def getJobsIterated(self):
-        return self.jobsIterated
+    # Use getter to avoid continuously fetching job total
+    def getTotalJobs(self):
+        return self.totalJobs
+
+    def getIteratedJobs(self):
+        return self.iteratedJobs

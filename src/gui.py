@@ -1,3 +1,4 @@
+import math
 import os
 
 from scraper import GradcrackerScraper
@@ -23,8 +24,21 @@ class ScrapeThread(QThread):
 
     def run(self):
         scraper = GradcrackerScraper(self.jobLevel, self.expertise)
-        jobsdf = scraper.scrapeJobData()
-        self.progress.emit((scraper.getJobsIterated()/scraper.getJobsTotal())*100)
+        totalJobs = scraper.getTotalJobs()
+
+        dfList = []
+        scrapedJobs = 0
+
+        while scrapedJobs < totalJobs:
+            batchdf = scraper.scrapeJobDataBatch()
+            dfList.append(batchdf)
+            scrapedJobs = scraper.getIteratedJobs()
+
+            percentage = int(math.ceil((scrapedJobs/totalJobs)*100))
+            self.progress.emit(percentage)
+
+        # Add all batches together
+        jobsdf = pd.concat(dfList)
         self.finished.emit(jobsdf)
 
 
@@ -106,11 +120,6 @@ class MainWindow(QMainWindow):
         self.refreshButton.clicked.connect(self.refreshData)
         mainLayout.addWidget(self.refreshButton)
 
-    def test(self):
-        for i in range(100):
-            time.sleep(0.01)
-            self.progressBar.setValue(i+1)
-
     # Update categories whenever expertise is changed
     def updateCategories(self):
         self.categoriesList.clear()
@@ -131,15 +140,18 @@ class MainWindow(QMainWindow):
 
         self.scrapeThread.start()
 
+    # Update bar whenever batch is done
     def updateProgressBar(self, value):
         self.progressBar.setValue(value)
 
+    # Clean data after scraping is finished
     def scrapingFinished(self, df):
         self.startButton.setEnabled(True)
         categories = [category.text() for category in self.categoriesList.selectedItems()]
 
         self.dataConverter = DataConverter(df, categories)
         self.dataConverter.cleanData()
+
 
     def convertToCSV(self):
         if self.dataConverter is not None:
