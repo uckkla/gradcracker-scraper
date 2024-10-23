@@ -1,4 +1,6 @@
 import json
+import os
+
 
 class DataConverter:
     def __init__(self, df, categories):
@@ -7,7 +9,10 @@ class DataConverter:
         # Gradcracker's selected categories are inconsistent to the job's specific category, so need to convert
         # Even with this there will be some jobs with no category, or not having the category in it at all
         # Due to them replacing it with "Accepting x disciplines"
-        with open('formattedCategories.json', 'r') as file:
+        # currentDir and jsonPath used when unit testing, as it runs from a different directory
+        currentDir = os.path.dirname(__file__)
+        jsonPath = os.path.join(currentDir, "formattedCategories.json")
+        with open(jsonPath, 'r') as file:
             categoryMap = json.load(file)
         self.categoryList = [category for key in self.categories for category in categoryMap.get(key)]
         print(self.categoryList)

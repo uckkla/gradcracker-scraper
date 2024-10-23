@@ -9,7 +9,7 @@ def test_cleanData():
 
     df = pd.DataFrame(testData)
 
-    categories = ["Analytics", "Data"]
+    categories = ["Analytics", "Data Science"]
     cleaner = DataConverter(df, categories)
     cleaner.cleanData()
 
@@ -26,7 +26,7 @@ def test_filterByCategory():
                                "Maths, AI, Robots"]}
 
     df = pd.DataFrame(testData)
-    categories = ["Analytics", "Data"]
+    categories = ["Analytics", "Data Science"]
     cleaner = DataConverter(df, categories)
     cleaner.filterByCategory()
 

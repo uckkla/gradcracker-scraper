@@ -1,3 +1,5 @@
+import os
+
 from scraper import GradcrackerScraper
 from data_converter import DataConverter
 import pandas as pd
@@ -32,7 +34,10 @@ class MainWindow(QMainWindow):
         # Instantiating for better readability - needed for multiple methods
         self.jobsdf = None
         self.dataConverter = None
-        with open('expertiseCategories.json', 'r') as file:
+        # currentDir and jsonPath used when unit testing, as it runs from a different directory
+        currentDir = os.path.dirname(__file__)
+        jsonPath = os.path.join(currentDir, "expertiseCategories.json")
+        with open(jsonPath, 'r') as file:
             self.expertiseCategories = json.load(file)
 
         self.createUI()

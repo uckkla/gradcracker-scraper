@@ -18,6 +18,9 @@ def test_scrapeData(mock_get, scraper):
     mock_get.return_value.status_code = 200
     mock_get.return_value.url = "https://www.gradcracker.com/search/computing-technology/engineering-graduate-jobs?page=1"
     mock_get.return_value.content = """
+    <div class="tw-text-2xl tw-font-bold tw-text-orange-500">
+    1
+    </div>
     <div class="tw-w-3/5 tw-pr-4 tw-space-y-2">
         <a class="tw-block tw-text-base tw-font-semibold"> Technology Graduate Programme</a>
         <div class="tw-text-xs tw-font-bold tw-text-gray-800"> IT, Software, Computing, Data Science.</div>
