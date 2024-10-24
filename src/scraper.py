@@ -32,23 +32,26 @@ class GradcrackerScraper:
         self.headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko)"
                                       " Chrome/129.0.0.0 Safari/537.36", }
 
+        # Needs to be stored as each batch is executed separately
+        self.pageNumber = 1
+
         # Needed for updating progress bar in GUI
         self.totalJobs = self.fetchTotalJobs()
         self.iteratedJobs = 0
 
     # Scrapes a page of job listings, returns in df format
-    def scrapeJobDataBatch(self):
-        pageNumber = 1
+    def scrapeJobBatch(self):
+
         df = pd.DataFrame(columns=["Title", "Categories", "Salary", "Location", "Degree required", "Job type",
                                    "Duration", "Starting", "Deadline"])
 
         # Random sleep to avoid temporarily being IP banned
         time.sleep(random.randint(1,3))
-        response = requests.get(self.url+str(pageNumber), headers=self.headers)
+        response = requests.get(self.url+str(self.pageNumber), headers=self.headers)
 
         # Page automatically sets to last page no matter how large the number
         # So if not equal, last page was found
-        if response.url != self.url+str(pageNumber):
+        if response.url != self.url+str(self.pageNumber):
             return None
 
         # Status Code 200 - response successful
@@ -96,7 +99,7 @@ class GradcrackerScraper:
             currentdf = pd.DataFrame(currentJobs)
             df = pd.concat([df, currentdf]).reset_index(drop=True)
 
-            pageNumber += 1
+            self.pageNumber += 1
         else:
             return f"Failed to retrieve data, status code: {response.status_code}"
         return df
@@ -109,7 +112,10 @@ class GradcrackerScraper:
                                        string="Graduate Opportunities")
             totalJobsCount = totalJobsLabel.find_previous_sibling(
                 "div", class_="tw-text-2xl tw-font-bold tw-text-orange-500")
+
             return int(totalJobsCount.text.strip().replace(",", ""))
+        else:
+            return f"Failed to retrieve data, status code: {response.status_code}"
 
     # Use getter to avoid continuously fetching job total
     def getTotalJobs(self):

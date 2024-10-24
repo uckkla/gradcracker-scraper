@@ -15,23 +15,24 @@ class DataConverter:
         with open(jsonPath, 'r') as file:
             categoryMap = json.load(file)
         self.categoryList = [category for key in self.categories for category in categoryMap.get(key)]
-        print(self.categoryList)
 
     # Remove duplicates, fill any NaN values
     def cleanData(self):
         self.df.fillna("N/A", inplace=True)
         self.df.drop_duplicates(inplace=True)
+        self.df.reset_index(drop=True, inplace=True)  # GUI concatenates batches together, need to reset index
         self.filterByCategory()
 
     # Remove all rows that do not contain any selected category
     def filterByCategory(self):
         # Dropping rows mid-loop will cause indexing issues
         rowsToDrop = []
+
         for index, row in self.df.iterrows():
             currentRowCategories = row['Categories'].strip(".").split(', ')
             if not any(category in currentRowCategories for category in self.categoryList):
                 rowsToDrop.append(index)
-        print(rowsToDrop)
+
         self.df.drop(rowsToDrop, inplace=True)
         self.df.reset_index(drop=True, inplace=True)
 

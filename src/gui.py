@@ -30,7 +30,7 @@ class ScrapeThread(QThread):
         scrapedJobs = 0
 
         while scrapedJobs < totalJobs:
-            batchdf = scraper.scrapeJobDataBatch()
+            batchdf = scraper.scrapeJobBatch()
             dfList.append(batchdf)
             scrapedJobs = scraper.getIteratedJobs()
 
@@ -140,10 +140,6 @@ class MainWindow(QMainWindow):
 
         self.scrapeThread.start()
 
-    # Update bar whenever batch is done
-    def updateProgressBar(self, value):
-        self.progressBar.setValue(value)
-
     # Clean data after scraping is finished
     def scrapingFinished(self, df):
         self.startButton.setEnabled(True)
@@ -152,6 +148,9 @@ class MainWindow(QMainWindow):
         self.dataConverter = DataConverter(df, categories)
         self.dataConverter.cleanData()
 
+    # Update bar whenever batch is done
+    def updateProgressBar(self, value):
+        self.progressBar.setValue(value)
 
     def convertToCSV(self):
         if self.dataConverter is not None:
