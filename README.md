@@ -5,8 +5,7 @@ This project is a scraper tool designed to easily extract job listings from the 
 This tool allows users to filter jobs by job level (Graduate/Placement) and expertise (Aerospace, Computing/Technology, Maths/Business, etc), making it easier to access and analyse relevant job opportunities.
 These opportunities can either be displayed on the GUI or exported to a CSV.
 
-![image](https://github.com/user-attachments/assets/6c694577-bf94-4df1-bc16-ae0d89656ac7)
-
+![image](https://github.com/user-attachments/assets/1765b64c-934a-4b60-982f-4f43199d9bb5)
 
 ## Features
 - **Job Filtering**: Choosing job level (Graduate/Placement) and expertise (Aerospace, Computing/Technology, Maths/Business, etc) to filter job listings.
